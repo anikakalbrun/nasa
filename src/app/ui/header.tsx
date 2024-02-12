@@ -3,7 +3,7 @@ import { anton } from "@/app/ui/fonts";
 
 export default function Header() {
   return (
-    <div className="full-w p-5 border-b border-l-zinc-300 sticky top-0 bg-white z-50">
+    <div className="full-w p-5 border-b border-l-zinc-300 sticky top-0 bg-white z-1">
       <nav className="">
         <Link
           href="/"

@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-//img.youtube.com/vi/PpyPgJHKxSw/0.jpg) 
+
 const nextConfig = {
   images: {
     remotePatterns: [

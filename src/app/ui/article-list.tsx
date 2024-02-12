@@ -1,27 +1,11 @@
 "use client";
-import { subWeeks, format } from "date-fns";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useDeferredValue } from "react";
 
 import ArticleItem from "@/app/ui/article-item";
-import { Suspense } from "react";
 import DashboardSkeleton from "@/app/ui/skeletons";
 import { fetchPosts } from "@/app/lib/data";
-
-export interface Post {
-  copyright: string;
-  date: string;
-  explanation: string;
-  hdurl: string;
-  media_type: string;
-  service_version: string;
-  title: string;
-  url: string;
-}
-
-interface LastPage {
-  data: Post[]; // Assuming ImageData is the interface representing each image object
-}
+import { Post } from "@/app/interfaces";
 
 interface PostsPages {
   pages: [Post[]];
@@ -32,7 +16,6 @@ export default function ArticleList() {
     data: posts,
     error,
     fetchNextPage,
-    hasNextPage,
     isFetching,
     isFetchingNextPage,
     status,
@@ -42,11 +25,13 @@ export default function ArticleList() {
       return fetchPosts(queryFunctionContext.pageParam);
     },
     initialPageParam: new Date().toISOString().split("T")[0],
-    getNextPageParam: (lastPage: Post[], b, c) => {
+    getNextPageParam: (lastPage: Post[]) => {
       const lastItemDate = lastPage[0].date;
       return lastItemDate; // Use the date of the last item as the next page parameter
     },
   });
+
+  const deferredQuery = useDeferredValue(posts);
 
   useEffect(() => {
     fetchNextPage();
@@ -67,13 +52,13 @@ export default function ArticleList() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isFetching, fetchNextPage]);
 
-  if (isFetching) {
+  if (isFetching && !isFetchingNextPage) {
     return <DashboardSkeleton />;
   }
 
   return (
     <div className="flex-center flex-col overflow-y-auto">
-      {posts?.pages.flat().map((post: Post) => (
+      {deferredQuery?.pages.flat().map((post: Post) => (
         <ArticleItem key={post.date} {...post} />
       ))}
     </div>
