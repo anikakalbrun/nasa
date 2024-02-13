@@ -16,7 +16,12 @@ export const fetchPosts = async (pageParam: string) => {
   if (!response.ok) {
     throw new Error("Failed to fetch data");
   }
-  return response.json() as Promise<Post[]>;
+
+  const data: Post[] = await response.json();
+  return data.sort(
+    (a: Post, b: Post) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 };
 
 export const fetchPost = async (day: string) => {

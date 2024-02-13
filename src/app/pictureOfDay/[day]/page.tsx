@@ -10,8 +10,7 @@ export default async function ArticleItem({
 }) {
   const day = params.day;
 
-  const { copyright, date, explanation, title, url, thumbnail_url } =
-    await fetchPost(day);
+  const { copyright, date, explanation, title, url, thumbnail_url } = await fetchPost(day);
   return (
     <>
       <div className="flex flex-col lg:flex-row space-x-4 space-y-2">

@@ -6,6 +6,7 @@ import ArticleItem from "@/app/ui/article-item";
 import DashboardSkeleton from "@/app/ui/skeletons";
 import { fetchPosts } from "@/app/lib/data";
 import { Post } from "@/app/interfaces";
+import { add, format } from "date-fns";
 
 interface PostsPages {
   pages: [Post[]];
@@ -24,10 +25,15 @@ export default function ArticleList() {
     queryFn: (queryFunctionContext) => {
       return fetchPosts(queryFunctionContext.pageParam);
     },
-    initialPageParam: new Date().toISOString().split("T")[0],
+    initialPageParam: format(new Date(), "yyyy-MM-dd"),
     getNextPageParam: (lastPage: Post[]) => {
-      const lastItemDate = lastPage[0].date;
-      return lastItemDate; // Use the date of the last item as the next page parameter
+      const lastItemDate = lastPage.at(-1)?.date;
+      // Handle case where lastPage is empty or date is missing
+
+      if (!lastItemDate) return "";
+
+      const nextDay = add(new Date(lastItemDate), { days: 1 });
+      return format(nextDay, "yyyy-MM-dd"); // Use the date of the last item as the next page parameter
     },
   });
 
