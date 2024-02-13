@@ -10,16 +10,19 @@ export default async function ArticleItem({
 }) {
   const day = params.day;
 
-  const { copyright, date, explanation, title, url, thumbnail_url } = await fetchPost(day);
+  const { copyright, date, explanation, title, url, thumbnail_url } =
+    await fetchPost(day);
   return (
     <>
       <div className="flex flex-col lg:flex-row space-x-4 space-y-2">
         <div className="image-container lg:image-container-large">
           <Image
             src={thumbnail_url || url}
-            layout="fill"
-            objectFit="cover"
             alt={title}
+            fill
+            sizes="100%"
+            style={{ objectFit: "cover" }}
+            priority={true}
           />
         </div>
         <div className="space-y-2 lg:max-w-[600px] p-8">

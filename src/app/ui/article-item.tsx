@@ -31,9 +31,11 @@ export default function ArticleItem({
         <div className="">
           <Image
             src={thumbnail_url || url}
-            width={500}
-            height={300}
             alt={title}
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="w-[500px] h-auto"
           />
         </div>
         <div className="space-y-2 max-w-96">
