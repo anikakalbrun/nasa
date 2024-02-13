@@ -16,5 +16,13 @@ const config: Config = {
     },
   },
   plugins: [],
+  compilerOptions: {
+    module: "esnext",
+    moduleResolution: "bundler",
+    baseUrl: "./",
+    paths: {
+      "@/components/*": ["components/*"],
+    },
+  },
 };
 export default config;
