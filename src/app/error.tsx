@@ -1,21 +1,11 @@
 "use client";
+
 import Link from "next/link";
-import { useEffect } from "react";
 import Image from "next/image";
+
 import { anton } from "@/app/ui/fonts";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
-  useEffect(() => {
-    // Optionally log the error to an error reporting service
-    console.error(error);
-  }, [error]);
-
+export default function Error({ reset }: { reset: () => void }) {
   return (
     <div className="containerStyle">
       <Image

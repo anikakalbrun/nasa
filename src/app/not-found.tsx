@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+
 import { anton } from "@/app/ui/fonts";
 
 export default function NotFound() {
@@ -8,9 +9,8 @@ export default function NotFound() {
       <Image
         src="/error-picture.jpg"
         alt="error"
-        layout="fill"
-        objectFit="cover"
-        quality={100}
+        fill
+        style={{ objectFit: "cover" }}
       />
       <div className="centered-element mt-20 flex flex-col items-center justify-center">
         <h3
