@@ -1,5 +1,7 @@
 "use server";
+
 import { subWeeks, format } from "date-fns";
+
 import { Post } from "@/app/interfaces";
 
 export const fetchPosts = async (pageParam: string) => {

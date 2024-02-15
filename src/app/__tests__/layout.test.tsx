@@ -3,6 +3,8 @@ import "@testing-library/jest-dom";
 
 import RootLayout from "@/app/layout";
 
+//TODO: refactor to fix Warning: validateDOMNesting(...): <html> cannot appear as a child of <div>.
+
 // Mocking the header component and react-query devtools
 jest.mock("@/app/ui/header", () => {
   return function DummyHeader() {
