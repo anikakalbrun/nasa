@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import { expect, describe, test } from "@jest/globals";
 import NotFound from "@/app/not-found";
 
 jest.mock('next/image', () => ({

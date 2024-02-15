@@ -19,7 +19,7 @@ jest.mock("next/image", () => {
 describe("Error Component", () => {
   const mockReset = jest.fn();
 
-  it("renders the error message, image, and buttons", () => {
+  test("renders the error message, image, and buttons", () => {
     render(<Error reset={mockReset} />);
 
     // Check for the error message
@@ -37,7 +37,7 @@ describe("Error Component", () => {
     expect(screen.getByText("Try again")).toBeInTheDocument();
   });
 
-  it('calls the reset function when "Try again" button is clicked', () => {
+  test('calls the reset function when "Try again" button is clicked', () => {
     render(<Error reset={mockReset} />);
 
     // Simulate button click
