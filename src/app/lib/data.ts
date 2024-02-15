@@ -14,6 +14,7 @@ export const fetchPosts = async (pageParam: string) => {
 
   const response = await fetch(url, { cache: "force-cache" });
   if (!response.ok) {
+    console.log(response);
     throw new Error("Failed to fetch data");
   }
 
