@@ -36,3 +36,4 @@ export const fetchPost = async (day: string) => {
   }
   return response.json() as Promise<Post>;
 };
+

@@ -3,5 +3,15 @@
     "next/core-web-vitals",
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["*.test.js", "*.test.jsx", "*.test.ts", "*.test.tsx"],
+
+      "rules": {
+        "react/display-name": "off",
+        "@next/next/no-img-element": "off"
+      }
+    }
   ]
 }
