@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { anton } from "@/app/ui/fonts";
+import HeaderAuth from "@/app/ui/header-auth";
 
 export default function Header() {
   return (
-    <div className="full-w p-5 border-b border-l-zinc-300 sticky top-0 bg-white z-10">
+    <div className="full-w p-5 border-b border-l-zinc-300 sticky top-0 bg-white z-10 flex justify-between">
       <nav className="">
         <Link
           href="/"
@@ -12,6 +13,7 @@ export default function Header() {
           Astronomy Picture of the Day
         </Link>
       </nav>
+      <HeaderAuth />
     </div>
   );
 }
