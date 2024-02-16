@@ -33,7 +33,7 @@ describe("RootLayout Component", () => {
     // Verify children are rendered
     expect(screen.getByText(testMessage)).toBeInTheDocument();
 
-    // verify the ReactQueryDevtools are rendered if needed
+    // verify the ReactQueryDevtools are rendered
     expect(screen.getByText('Mocked ReactQueryDevtools')).toBeInTheDocument();
   });
 });

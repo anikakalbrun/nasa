@@ -1,4 +1,4 @@
-import { fetchPosts } from "@/app/lib/data";
+import { fetchPosts, fetchPost } from "@/app/lib/data";
 
 const mockFetch = jest.fn().mockImplementation((url) =>
 Promise.resolve({
@@ -6,10 +6,17 @@ Promise.resolve({
   json: () =>
     Promise.resolve([
       {
-        date: "2023-09-30",
-        title: "Test Post",
+        date: "2023-09-29",
         url,
       },
+      {
+        date: "2023-09-30",
+        url,
+      },
+      {
+        date: "2023-09-31",
+        url,
+      }
     ]),
 })
 ) as jest.MockedFunction<typeof fetch>
@@ -29,8 +36,9 @@ describe("fetchPosts", () => {
     const posts = await fetchPosts("2023-10-01");
 
     expect(mockFetch).toHaveBeenCalledTimes(1);
-    expect(posts).toHaveLength(1);
-    expect(posts[0].title).toEqual("Test Post");
+    expect(posts[0].date).toEqual("2023-09-31");
+    expect(posts[1].date).toEqual("2023-09-30");
+    expect(posts[2].date).toEqual("2023-09-29");
     expect(mockFetch).toHaveBeenCalledWith(
       expect.stringContaining("start_date=2023-09-17&end_date=2023-10-01"),
       expect.anything()
@@ -46,5 +54,46 @@ describe("fetchPosts", () => {
     expect(fetchOptions).toEqual(
       expect.objectContaining({ cache: "force-cache" })
     );
+  });
+
+  test('throws an error when fetch fails', async () => {
+    (mockFetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+    });
+
+    await expect(fetchPosts('2021-01-01')).rejects.toThrow('Failed to fetch data');
+  });
+});
+
+describe('fetchPost', () => {
+  beforeEach(() => {
+    (mockFetch as jest.Mock).mockClear();
+  });
+  test('fetches post data successfully', async () => {
+    const mockPostData = {
+      date: '2021-01-01',
+      explanation: 'This is a test explanation.',
+      title: 'Test Title',
+    };
+
+    (mockFetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve(mockPostData),
+    });
+
+    const result = await fetchPost('2021-01-01');
+    expect(result).toEqual(mockPostData);
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(mockFetch).toHaveBeenCalledWith(
+      `https://api.nasa.gov/planetary/apod?api_key=${process.env.NASA_API_KEY}&date=2021-01-01`
+    );
+  });
+
+  test('throws an error when fetch fails', async () => {
+    (mockFetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+    });
+
+    await expect(fetchPost('2021-01-01')).rejects.toThrow('Failed to fetch data');
   });
 });
