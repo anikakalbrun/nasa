@@ -4,8 +4,7 @@ import { subWeeks, format } from "date-fns";
 
 import { Post } from "@/app/interfaces";
 
-export const fetchPosts = async (pageParam: string) => {
-  const currentDate = pageParam;
+export const fetchPosts = async (currentDate: string) => {
   const twoWeeksAgo = subWeeks(currentDate, 2);
 
   // Format the new date as YYYY-MM-DD
@@ -36,4 +35,3 @@ export const fetchPost = async (day: string) => {
   }
   return response.json() as Promise<Post>;
 };
-

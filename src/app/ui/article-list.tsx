@@ -6,7 +6,7 @@ import ArticleItem from "@/app/ui/article-item";
 import DashboardSkeleton from "@/app/ui/skeletons";
 import { fetchPosts } from "@/app/lib/data";
 import { Post } from "@/app/interfaces";
-import { add, format } from "date-fns";
+import { subDays, format } from "date-fns";
 
 interface PostsPages {
   pages: [Post[]];
@@ -27,28 +27,28 @@ export default function ArticleList() {
     },
     initialPageParam: format(new Date(), "yyyy-MM-dd"),
     getNextPageParam: (lastPage: Post[]) => {
-      const lastItemDate = lastPage.at(-1)?.date;
+      const lastItemDate = lastPage
+        .sort(
+          (a: Post, b: Post) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        )
+        .at(-1)?.date;
       // Handle case where lastPage is empty or date is missing
 
       if (!lastItemDate) return "";
 
-      const nextDay = add(new Date(lastItemDate), { days: 1 });
-      return format(nextDay, "yyyy-MM-dd"); // Use the date of the last item as the next page parameter
+      const previousDay = subDays(new Date(lastItemDate), 1);
+      return format(previousDay, "yyyy-MM-dd"); // Use the date of the last item as the next page parameter
     },
   });
 
   const deferredQuery = useDeferredValue(posts);
 
   useEffect(() => {
-    fetchNextPage();
-  }, [fetchNextPage]);
-
-  useEffect(() => {
     const handleScroll = () => {
       if (
         window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        isFetching
+        document.documentElement.offsetHeight
       ) {
         return;
       }
@@ -56,11 +56,13 @@ export default function ArticleList() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isFetching, fetchNextPage]);
+  }, [fetchNextPage]);
 
   if (isFetching && !isFetchingNextPage) {
     return <DashboardSkeleton />;
   }
+
+  console.log(deferredQuery?.pages);
 
   return (
     <div className="flex-center flex-col overflow-y-auto">

@@ -18,6 +18,10 @@ jest.mock("@tanstack/react-query-devtools", () => ({
   },
 }));
 
+jest.mock('next-auth/react', () => ({
+  SessionProvider: ({ children }: {children: any}) => children,
+}));
+
 describe("RootLayout Component", () => {
   test("renders children and includes essential layout components", () => {
     const testMessage = "Test Child Component";
