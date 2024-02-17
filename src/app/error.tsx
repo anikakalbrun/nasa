@@ -1,21 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 
 import { anton } from "@/app/ui/fonts";
+import ErrorCommon from "@/app/ui/error-common";
 
 export default function Error({ reset }: { reset: () => void }) {
   return (
-    <div className="containerStyle">
-      <Image
-        src="/error-picture.jpg"
-        alt="error"
-        layout="fill"
-        objectFit="cover" // or "contain" depending on your needs
-        quality={100}
-      />
-      <div className="centered-element mt-20 flex flex-col items-center justify-center">
+    <ErrorCommon>
+      <>
         <h3
           className={`${anton.className} text-white text-xl md:text-3xl lg:text-5xl md:leading-normal mt-20`}
         >
@@ -35,7 +28,7 @@ export default function Error({ reset }: { reset: () => void }) {
         >
           Try again
         </button>
-      </div>
-    </div>
+      </>
+    </ErrorCommon>
   );
 }

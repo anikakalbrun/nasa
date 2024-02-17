@@ -1,4 +1,5 @@
 "use client";
+
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect, useDeferredValue } from "react";
 
@@ -6,6 +7,7 @@ import ArticleItem from "@/app/ui/article-item";
 import DashboardSkeleton from "@/app/ui/skeletons";
 import { fetchPosts } from "@/app/lib/data";
 import { Post } from "@/app/interfaces";
+import ArticleListError from "@/app/ui/article-list-error";
 import { subDays, format } from "date-fns";
 
 interface PostsPages {
@@ -19,7 +21,6 @@ export default function ArticleList() {
     fetchNextPage,
     isFetching,
     isFetchingNextPage,
-    status,
   } = useInfiniteQuery({
     queryKey: ["planetary"],
     queryFn: (queryFunctionContext) => {
@@ -41,9 +42,7 @@ export default function ArticleList() {
       return format(previousDay, "yyyy-MM-dd"); // Use the date of the last item as the next page parameter
     },
   });
-
   const deferredQuery = useDeferredValue(posts);
-
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -62,7 +61,11 @@ export default function ArticleList() {
     return <DashboardSkeleton />;
   }
 
-  console.log(deferredQuery?.pages);
+  if (error) {
+    return (
+      <ArticleListError/>
+    );
+  }
 
   return (
     <div className="flex-center flex-col overflow-y-auto">

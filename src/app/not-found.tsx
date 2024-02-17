@@ -1,18 +1,12 @@
 import Link from "next/link";
-import Image from "next/image";
 
 import { anton } from "@/app/ui/fonts";
+import ErrorCommon from "@/app/ui/error-common";
 
 export default function NotFound() {
   return (
-    <div className="containerStyle">
-      <Image
-        src="/error-picture.jpg"
-        alt="error"
-        fill
-        style={{ objectFit: "cover" }}
-      />
-      <div className="centered-element mt-20 flex flex-col items-center justify-center">
+    <ErrorCommon>
+      <>
         <h3
           className={`${anton.className} text-8xl md:text-9xl text-white md:leading-normal `}
         >
@@ -28,7 +22,7 @@ export default function NotFound() {
             Take me home
           </button>
         </Link>
-      </div>
-    </div>
+      </>
+    </ErrorCommon>
   );
 }
