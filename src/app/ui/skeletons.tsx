@@ -21,7 +21,7 @@ export function CardSkeleton() {
 export default function DashboardSkeleton() {
   return (
     <>
-      <div className="flex-center flex-col">
+      <div className="flex-center flex-col w-full overflow-clip">
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
