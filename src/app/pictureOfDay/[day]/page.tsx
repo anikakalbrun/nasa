@@ -2,6 +2,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import { IoTimeOutline } from "react-icons/io5";
 import { fetchPost } from "@/app/lib/data";
+import Video from "@/app/ui/video";
 
 export default async function ArticleItem({
   params,
@@ -10,20 +11,31 @@ export default async function ArticleItem({
 }) {
   const day = params.day;
 
-  const { copyright, date, explanation, title, url, thumbnail_url } =
-    await fetchPost(day);
+  const {
+    copyright,
+    date,
+    explanation,
+    title,
+    url,
+    thumbnail_url,
+    media_type,
+  } = await fetchPost(day);
   return (
     <>
       <div className="flex flex-col lg:flex-row space-x-4 space-y-2">
         <div className="image-container lg:image-container-large">
-          <Image
-            src={thumbnail_url || url}
-            alt={title}
-            fill
-            sizes="100%"
-            style={{ objectFit: "cover" }}
-            priority={true}
-          />
+          {media_type === "video" ? (
+            <Video src={url} />
+          ) : (
+            <Image
+              src={thumbnail_url || url}
+              alt={title}
+              fill
+              sizes="100%"
+              style={{ objectFit: "cover" }}
+              priority={true}
+            />
+          )}
         </div>
         <div className="space-y-2 lg:max-w-[600px] p-8">
           <div className="font-bold text-2xl pb-2">{title}</div>

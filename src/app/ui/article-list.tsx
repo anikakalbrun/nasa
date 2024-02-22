@@ -10,10 +10,6 @@ import { Post } from "@/app/interfaces";
 import ArticleListError from "@/app/ui/article-list-error";
 import { subDays, format } from "date-fns";
 
-interface PostsPages {
-  pages: [Post[]];
-}
-
 export default function ArticleList() {
   const {
     data: posts,
@@ -42,7 +38,9 @@ export default function ArticleList() {
       return format(previousDay, "yyyy-MM-dd"); // Use the date of the last item as the next page parameter
     },
   });
+
   const deferredQuery = useDeferredValue(posts);
+  
   useEffect(() => {
     const handleScroll = () => {
       if (

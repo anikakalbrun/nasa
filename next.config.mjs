@@ -14,7 +14,13 @@ const nextConfig = {
         hostname: "img.youtube.com",
         port: "",
         pathname: "/**/**",
-      }
+      },
+      {
+        protocol: "https",
+        hostname: "www.youtube.com",
+        port: "",
+        pathname: "/**/**",
+      },
     ],
   },
 };

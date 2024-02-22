@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { IoTimeOutline } from "react-icons/io5";
 import Link from "next/link";
 import { Post } from "@/app/interfaces";
+import Video from "@/app/ui/video";
 
 function getFirstThreeSentences(text: string) {
   // Split the text into an array of sentences using regex
@@ -24,19 +25,24 @@ export default function ArticleItem({
   title,
   url,
   thumbnail_url,
+  media_type,
 }: Post) {
   return (
     <Link href={`/pictureOfDay/${date}`}>
       <div className="flex flex-col lg:flex-row space-x-4 space-y-2 p-6">
         <div className="">
-          <Image
-            src={thumbnail_url || url}
-            alt={title}
-            width="0"
-            height="0"
-            sizes="100vw"
-            className="w-[500px] h-auto"
-          />
+          {media_type === "video" ? (
+            <Video src={url} className="w-[500px] h-[400px]" />
+          ) : (
+            <Image
+              src={thumbnail_url || url}
+              alt={title}
+              width="0"
+              height="0"
+              sizes="100vw"
+              className="w-[500px] h-auto"
+            />
+          )}
         </div>
         <div className="space-y-2 max-w-96">
           <div className="font-bold text-2xl pb-2">{title}</div>
